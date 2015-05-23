@@ -12,15 +12,18 @@ ST_CC1=1
 ST_CC2=2
 
 class TVRemote(object):
-    def __init__(self, device):
-        self.port = serial.Serial(device, 
-                baudrate=9600, 
-                bytesize=8, 
-                parity='N', 
+    def __init__(self, device=None):
+        if device is None:
+            device = '/dev/ttyS0'
+
+        self.port = serial.Serial(device,
+                baudrate=9600,
+                bytesize=8,
+                parity='N',
                 stopbits=1,
                 timeout=3,
                 writeTimeout=1)
-    
+
     def close(self):
         self.port.close()
 
@@ -38,9 +41,9 @@ class TVRemote(object):
             # timeout
             if not c:
                 return False
-            
+
             if DEBUG:
-                print "%02X" % ord(c),
+                print("%02X" % ord(c), sep=' ')
 
             if status == ST_INIT:
                 if c == SAMSUNG_RESPONSE_SUCCESS[0]:
@@ -67,7 +70,7 @@ class TVRemote(object):
         cmd += chr(self._checksum(cmd))
 
         self.port.write(cmd)
-    
+
         time.sleep(timeout)
 
         response = self._analyze_response()
@@ -150,7 +153,7 @@ class TVRemote(object):
 
     def cmd_tv_channel_down(self):
         """Change to previous TV channel"""
-        return self._send_cmd(0x03, 0x00, 0x02, 0x01)
+        return self._send_cmd(0x03, 0x00, 0x02, 0x00)
     cmd_tv_channel_down.nargs = 0
 
     def cmd_power_off(self):

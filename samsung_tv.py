@@ -34,7 +34,7 @@ class ListCommandsAction(argparse.Action):
         for cmd in commands:
             method = exlink.TVRemote.__dict__["cmd_"+cmd]
             out.append("%s - %s" % (cmd, method.__doc__))
-        print "\n".join(out)
+        print("\n".join(out))
 
     def __call__(self, parser, namespace, values, option_string=None):
         self._show_commands()
@@ -55,15 +55,15 @@ class SamsungCLI(object):
             description='Send commands to a Samsung TV using a serial port.')
 
         parser.add_argument(
-            '-l', '--list', action=ListCommandsAction, default=False, 
+            '-l', '--list', action=ListCommandsAction, default=False,
             help='List of available commands')
 
         parser.add_argument(
-            '-p', '--port', metavar='serialport', type=str, default='/dev/ttyS0',
+            '-p', '--port', metavar='serialport', type=str, default='/dev/ttyUSB0',
             help='Serial port connected to a Samsung TV via ex-link cable (/dev/ttyS0 by default)')
 
         parser.add_argument(
-            'command', metavar='command', type=str, 
+            'command', metavar='command', type=str,
             help='Command to send to TV')
 
         parser.add_argument(
@@ -75,12 +75,12 @@ class SamsungCLI(object):
 
     def _check_serialport_exists(self):
         """Check if the user provided serial port exists"""
-        try:                    
+        try:
             st = os.stat(self._args.port)
             return True
         except OSError:
             self._errors.append("Device '%s' is not accessible or does no exist" % (self._args.port,))
-            return False            
+            return False
 
     def _check_command_exists(self):
         if not self._args.command in exlink.TVRemote.command_list():
@@ -94,7 +94,7 @@ class SamsungCLI(object):
         args = self._args.args
 
         if cmd == 'volume_set' or cmd == 'tv_channel_set':
-            if len(args) <> 1:
+            if len(args) != 1:
                 self._errors.append("%s requires one argument" % (cmd,))
                 return False
 
@@ -107,7 +107,7 @@ class SamsungCLI(object):
                 self._errors.append("argument is not a valid number between 0 and 255")
                 return False
         else:
-            if len(args) <> 0:
+            if len(args) != 0:
                 self._errors.append("%s does not need arguments" % (cmd,))
                 return False
 
