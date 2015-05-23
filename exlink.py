@@ -69,7 +69,7 @@ class TVRemote(object):
         cmd = "%s%c%c%c%c" % (SAMSUNG_REQUEST_PREFIX, cmd1, cmd2, cmd3, value)
         cmd += chr(self._checksum(cmd))
 
-        self.port.write(cmd)
+        self.port.write(cmd.encode('latin1'))
 
         time.sleep(timeout)
 
