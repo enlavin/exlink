@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 from jsonrpclib.SimpleJSONRPCServer import SimpleJSONRPCServer
 import exlink
+import os
+import sys
 
 server = SimpleJSONRPCServer(('0.0.0.0', 9000))
 tv = exlink.TVRemote("/dev/ttySUSB0")
