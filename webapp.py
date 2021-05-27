@@ -1,3 +1,7 @@
+import os
+import sys
+import webbrowser
+import django
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 from exlink import TVRemote
@@ -12,7 +16,7 @@ action_parser.add_argument('action', str)
 volume_parser = reqparse.RequestParser()
 volume_parser.add_argument('level', int)
 
-
+# create class TVVolume(Resource):
 class TVVolume(Resource):
     VOLUME_ACTIONS = ['up', 'down', 'mute', 'normal']
 
@@ -46,7 +50,7 @@ class TVVolume(Resource):
 
         return {}, 204
 
-
+# create class TVScreen(Resource):
 class TVScreen(Resource):
     def _isvalid_action(self, action):
         return action == 'off'
