@@ -6,13 +6,16 @@ usage: samsung_tv.py [-h] [--port serialport]
 samsung_tv.py --port /dev/ttyS0 cmd [args]
 """
 
+import webbrowser
 import argparse
 import logging
+import time
 import os
 import sys
 
 import exlink
 
+# create class ListCommandsAction(argparse.Action):
 class ListCommandsAction(argparse.Action):
     """Show a list of available commands and exists"""
     def __init__(self,
@@ -40,6 +43,7 @@ class ListCommandsAction(argparse.Action):
         self._show_commands()
         parser.exit()
 
+# create class SamsungCLI(object):
 class SamsungCLI(object):
     def __init__(self):
         self._port = None
