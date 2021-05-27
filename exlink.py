@@ -1,5 +1,8 @@
+import os
+import sys
 import time
 import serial
+import datetime
 
 DEBUG=True
 
@@ -11,6 +14,7 @@ ST_INIT=0
 ST_CC1=1
 ST_CC2=2
 
+# create class TVRemote(object): 
 class TVRemote(object):
     def __init__(self, device=None):
         if device is None:
@@ -186,6 +190,6 @@ if __name__ == '__main__':
         time.sleep(0.5)
         tv.cmd_set_volume(15)
     finally:
-        tv.close()
+        tv.close() # close
 
 
